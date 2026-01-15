@@ -2,24 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SafeWeather</title>
+    <title>SafeWeather | Secure Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="auth-body">
-    <div class="auth-card">
-        <h2>SafeWeather</h2>
-        <p>Login to your account</p>
-        
-        <input type="text" id="loginUser" placeholder="Username">
-        <input type="password" id="loginPass" placeholder="Password">
-        
-        <button onclick="handleLogin()" class="btn-main">Login</button>
-        <button onclick="guestLogin()" class="btn-guest">Continue as Guest</button>
-        
-        <p>Don't have an account? <a href="register.html">Register here</a></p>
+<body style="display:flex; align-items:center; justify-content:center;">
+    <div class="auth-card card" style="width:400px; text-align:center;">
+        <h1>Secure Entry</h1>
+        <p style="margin-bottom:2rem; opacity:0.7;">Access Malaysia's Most Accurate Weather Hazard Map</p>
+        <input type="text" id="username" placeholder="Identity / Username">
+        <input type="password" id="password" placeholder="Access Code / Password">
+        <button onclick="App.login()" class="btn-premium" style="width:100%;">Authorize Access</button>
+        <hr style="margin:2rem 0; opacity:0.1;">
+        <button onclick="App.guestEntry()" style="background:none; color:white; border:none; cursor:pointer;">Enter as Guest Observer</button>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
