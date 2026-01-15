@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SafeWeather</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="mainBody">
+    <nav class="navbar">
+        <span class="logo">SafeWeather</span>
+        <div class="nav-links">
+            <span id="userInfo"></span>
+            <button onclick="logout()" class="btn-logout">Logout</button>
+        </div>
+
+        <div class="hazard-container">
+    <h3>Live Hazard Map & Gallery</h3>
+    
+    <div class="filter-buttons">
+        <button onclick="filterHazards('all')">All</button>
+        <button onclick="filterHazards('Flood')">Floods</button>
+        <button onclick="filterHazards('Rain')">Heavy Rain</button>
+    </div>
+
+    <div class="map-box">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1019183.1819441165!2d101.05607379203648!3d3.138503566127402!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cc362abd08e7d3%3A0x232e17121dd45456!2sKuala%20Lumpur!5e0!3m2!1sen!2smy!4v1700000000000!5m2!1sen!2smy" 
+            width="100%" height="250" style="border:0; border-radius:15px;" allowfullscreen="" loading="lazy">
+        </iframe>
+    </div>
+
+    <div id="hazardGallery" class="hazard-grid">
+        <div class="hazard-card" data-type="Flood">
+            <img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?q=80&w=500" alt="Flood">
+            <p>Jalan Ampang - Flood Reported</p>
+        </div>
+        <div class="hazard-card" data-type="Rain">
+            <img src="https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=500" alt="Rain">
+            <p>Shah Alam - Low Visibility</p>
+        </div>
+    </div>
+</div>
+
+        <div id="adminSection" class="admin-box" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3>Admin Panel: Recent Reports</h3>
+                    <button onclick="printReport()" class="btn-print">🖨️ Print Report</button>
+            </div>
+            <div id="reportList"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="weather-card">
+            <h1 id="city">Kuala Lumpur</h1>
+            <h2 id="temp">--°C</h2>
+            <p id="description">Fetching weather...</p>
+            <div id="weatherIcon"></div>
+        </div>
+
+        <div id="upgradeSection" class="premium-box" style="display: none;">
+            <h3>🌟 Upgrade to PRO</h3>
+            <p>Get 7-day extended forecasts and SMS alerts!</p>
+            <button onclick="handleUpgrade()" class="btn-upgrade">Upgrade Now</button>
+        </div>
+
+        <div id="reportSection" class="report-box" style="display: none;">
+            <h3>Report Weather Hazard</h3>
+            <input type="text" id="hazardLoc" placeholder="Location (e.g. Jalan Ampang)">
+            <select id="hazardType">
+                <option value="Flood">Flood</option>
+                <option value="Heavy Rain">Heavy Rain</option>
+                <option value="Landslide">Landslide</option>
+            </select>
+            <button onclick="submitReport()" class="btn-main">Submit Report</button>
+        </div>
+
+        <div id="adminSection" class="admin-box" style="display: none;">
+            <h3>Admin Panel: Recent Reports</h3>
+            <div id="reportList"></div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="cityInput" placeholder="Enter city name...">
+            <button onclick="searchCity()">Search</button>
+        </div>
+    </div>
+
+    <div id="chat-container" class="chat-closed">
+    <div id="chat-header" onclick="toggleChat()">
+        <span>💬 SafeWeather Bot</span>
+        <span id="chat-toggle-icon">+</span>
+    </div>
+    <div id="chat-body">
+        <div id="chat-messages">
+            <p class="bot-msg">Hi! I'm SafeWeather Bot. How can I help you today?</p>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Ask me something...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
