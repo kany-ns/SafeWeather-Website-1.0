@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SafeWeather</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <h3>John Driver</h3>
+                        <p class="user-role">School Bus Driver</p>
+                        <p class="user-school">SK Batu Pahat</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html" class="active">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="weather-report.html">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Weather Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="hazard-map.html">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>Hazard Map</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="alert.html">
+                            <i class="fas fa-bell"></i>
+                            <span>Alerts</span>
+                            <span class="badge">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="routes.html">
+                            <i class="fas fa-route"></i>
+                            <span>My Routes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Saved Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.html">
+                            <i class="fas fa-user-cog"></i>
+                            <span>Profile Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pricing.html">
+                            <i class="fas fa-crown"></i>
+                            <span>Upgrade Plan</span>
+                            <span class="premium-badge">PRO</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="weather-status">
+                    <div class="status-indicator green"></div>
+                    <span>All Systems Operational</span>
+                </div>
+                <a href="logout.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1>Dashboard</h1>
+                    <p>Welcome back, John! Here's your weather overview.</p>
+                </div>
+                <div class="topbar-right">
+                    <!-- Language Toggle -->
+                    <div class="language-toggle">
+                        <button id="lang-toggle" class="lang-btn">
+                            <i class="fas fa-globe"></i>
+                            <span id="current-lang">EN</span>
+                        </button>
+                        <div class="language-dropdown">
+                            <button data-lang="en">English</button>
+                            <button data-lang="ms">Malay</button>
+                        </div>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <div class="theme-toggle">
+                        <button id="theme-toggle" class="theme-btn">
+                            <i class="fas fa-moon"></i>
+                            <span>Dark Mode</span>
+                        </button>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button class="action-btn" onclick="generateReport()">
+                            <i class="fas fa-file-export"></i>
+                            <span>Generate Report</span>
+                        </button>
+                        <button class="action-btn" onclick="window.location.href='alert.html'">
+                            <i class="fas fa-bell"></i>
+                            <span>View Alerts</span>
+                            <span class="notification-count">3</span>
+                        </button>
+                        <button class="action-btn premium" onclick="window.location.href='pricing.html'">
+                            <i class="fas fa-crown"></i>
+                            <span>Upgrade to Pro</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-temperature-high"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>32°C</h3>
+                            <p>Current Temperature</p>
+                        </div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+2°C from yesterday</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-cloud-sun"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Sunny</h3>
+                            <p>Weather Condition</p>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Safe for travel</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon orange">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>2</h3>
+                            <p>Active Warnings</p>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-eye"></i>
+                            <span>Monitor closely</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon purple">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>3</h3>
+                            <p>Active Routes</p>
+                        </div>
+                        <div class="stat-trend">
+                            <i class="fas fa-clock"></i>
+                            <span>Next: 07:30 AM</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Weather Overview & Map -->
+            <section class="overview-section">
+                <div class="overview-grid">
+                    <!-- Weather Overview -->
+                    <div class="overview-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-cloud-sun-rain"></i> Current Weather</h3>
+                            <select class="location-select">
+                                <option>Batu Pahat, Johor</option>
+                                <option>Kluang, Johor</option>
+                                <option>Muar, Johor</option>
+                            </select>
+                        </div>
+                        <div class="weather-details">
+                            <div class="current-weather">
+                                <div class="temp-large">32°C</div>
+                                <div class="condition">
+                                    <i class="fas fa-sun"></i>
+                                    <div>
+                                        <h4>Sunny</h4>
+                                        <p>Feels like 34°C</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="weather-metrics">
+                                <div class="metric">
+                                    <i class="fas fa-wind"></i>
+                                    <div>
+                                        <span class="value">12 km/h</span>
+                                        <span class="label">Wind Speed</span>
+                                    </div>
+                                </div>
+                                <div class="metric">
+                                    <i class="fas fa-tint"></i>
+                                    <div>
+                                        <span class="value">65%</span>
+                                        <span class="label">Humidity</span>
+                                    </div>
+                                </div>
+                                <div class="metric">
+                                    <i class="fas fa-eye"></i>
+                                    <div>
+                                        <span class="value">10 km</span>
+                                        <span class="label">Visibility</span>
+                                    </div>
+                                </div>
+                                <div class="metric">
+                                    <i class="fas fa-compress-alt"></i>
+                                    <div>
+                                        <span class="value">1013 hPa</span>
+                                        <span class="label">Pressure</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="alert-level green">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>SAFE CONDITIONS</strong>
+                                <p>All routes are clear for travel</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mini Map -->
+                    <div class="overview-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-map-marked-alt"></i> Route Overview</h3>
+                            <button class="btn-secondary btn-small" onclick="window.location.href='hazard-map.html'">
+                                <i class="fas fa-expand"></i> Full Map
+                            </button>
+                        </div>
+                        <div class="mini-map" id="miniMap">
+                            <!-- Google Maps will be loaded here -->
+                            <div class="map-placeholder">
+                                <i class="fas fa-map"></i>
+                                <p>Interactive Map Loading...</p>
+                                <div class="map-legend">
+                                    <div class="legend-item">
+                                        <span class="dot green"></span> Safe Route
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="dot yellow"></span> Caution Area
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="dot red"></span> Hazard Zone
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recent Alerts & Quick Actions -->
+            <section class="alerts-section">
+                <div class="section-grid">
+                    <!-- Recent Alerts -->
+                    <div class="section-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bell"></i> Recent Alerts</h3>
+                            <a href="alert.html" class="view-all">View All</a>
+                        </div>
+                        <div class="alerts-list">
+                            <div class="alert-item critical">
+                                <div class="alert-icon">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <div class="alert-content">
+                                    <h4>Thunderstorm Warning</h4>
+                                    <p>Expected near Parit Raja at 14:00</p>
+                                    <span class="alert-time">10 minutes ago</span>
+                                </div>
+                                <button class="alert-action">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <div class="alert-item warning">
+                                <div class="alert-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="alert-content">
+                                    <h4>Heavy Rain Alert</h4>
+                                    <p>Route BP-101 may experience flooding</p>
+                                    <span class="alert-time">1 hour ago</span>
+                                </div>
+                                <button class="alert-action">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <div class="alert-item info">
+                                <div class="alert-icon">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <div class="alert-content">
+                                    <h4>High Temperature</h4>
+                                    <p>Temperature reaching 35°C this afternoon</p>
+                                    <span class="alert-time">2 hours ago</span>
+                                </div>
+                                <button class="alert-action">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="section-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                        </div>
+                        <div class="quick-actions-grid">
+                            <button class="quick-action-btn" onclick="generateReport()">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>Generate Report</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="checkRouteSafety()">
+                                <i class="fas fa-route"></i>
+                                <span>Check Route Safety</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="setNotification()">
+                                <i class="fas fa-bell"></i>
+                                <span>Set Alert</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="shareReport()">
+                                <i class="fas fa-share-alt"></i>
+                                <span>Share Report</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="printRoute()">
+                                <i class="fas fa-print"></i>
+                                <span>Print Route</span>
+                            </button>
+                            <button class="quick-action-btn premium" onclick="window.location.href='pricing.html'">
+                                <i class="fas fa-crown"></i>
+                                <span>Upgrade Features</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Upcoming Schedule -->
+            <section class="schedule-section">
+                <div class="section-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-calendar-alt"></i> Today's Schedule</h3>
+                        <div class="schedule-actions">
+                            <button class="btn-secondary btn-small">
+                                <i class="fas fa-sync"></i> Refresh
+                            </button>
+                            <button class="btn-secondary btn-small" onclick="printSchedule()">
+                                <i class="fas fa-print"></i> Print
+                            </button>
+                        </div>
+                    </div>
+                    <div class="schedule-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Route</th>
+                                    <th>Students</th>
+                                    <th>Weather Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>06:30 AM</td>
+                                    <td>BP-101 (Morning Pickup)</td>
+                                    <td>24 students</td>
+                                    <td>
+                                        <span class="status-badge safe">
+                                            <i class="fas fa-check-circle"></i> Safe
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="action-icon" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-icon" title="Get Directions">
+                                            <i class="fas fa-directions"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>01:30 PM</td>
+                                    <td>BP-102 (Afternoon Drop-off)</td>
+                                    <td>22 students</td>
+                                    <td>
+                                        <span class="status-badge warning">
+                                            <i class="fas fa-exclamation-triangle"></i> Watch
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="action-icon" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-icon" title="Alternative Route">
+                                            <i class="fas fa-route"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>04:00 PM</td>
+                                    <td>BP-103 (Evening Service)</td>
+                                    <td>18 students</td>
+                                    <td>
+                                        <span class="status-badge danger">
+                                            <i class="fas fa-exclamation-circle"></i> Risk
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <button class="action-icon" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="action-icon" title="Request Assistance">
+                                            <i class="fas fa-phone-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Dashboard Styles -->
+    <style>
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+            background: var(--light-color);
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--white);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 2rem 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .user-profile {
+            text-align: center;
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .avatar i {
+            font-size: 2rem;
+            color: var(--white);
+        }
+
+        .user-info h3 {
+            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+        }
+
+        .user-role {
+            color: var(--primary-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .user-school {
+            color: var(--gray-color);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .sidebar-menu {
+            flex: 1;
+            padding: 1.5rem 0;
+        }
+
+        .sidebar-menu ul {
+            list-style: none;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 1.5rem;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary-color);
+        }
+
+        .sidebar-menu a i {
+            width: 24px;
+            margin-right: 12px;
+            font-size: 1.1rem;
+        }
+
+        .badge {
+            background: var(--danger-color);
+            color: var(--white);
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: auto;
+        }
+
+        .premium-badge {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: var(--white);
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            margin-left: auto;
+            font-weight: 600;
+        }
+
+        .sidebar-footer {
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .weather-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-indicator.green {
+            background: var(--success-color);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: var(--gray-light);
+            color: var(--dark-color);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background: #ef4444;
+            color: var(--white);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .topbar-left h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .topbar-left p {
+            color: var(--gray-color);
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--white);
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .action-btn.premium {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: var(--white);
+            border: none;
+        }
+
+        .action-btn.premium:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .notification-count {
+            background: var(--danger-color);
+            color: var(--white);
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 50%;
+            margin-left: 4px;
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .stat-icon.blue { background: var(--primary-color); }
+        .stat-icon.green { background: var(--success-color); }
+        .stat-icon.orange { background: var(--warning-color); }
+        .stat-icon.purple { background: #8b5cf6; }
+
+        .stat-info h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-info p {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        .stat-trend {
+            margin-left: auto;
+            text-align: right;
+            font-size: 0.85rem;
+        }
+
+        .stat-trend.up {
+            color: var(--success-color);
+        }
+
+        .stat-trend.down {
+            color: var(--danger-color);
+        }
+
+        /* Overview Section */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .overview-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .location-select {
+            padding: 6px 12px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-md);
+            background: var(--white);
+        }
+
+        .weather-details {
+            padding: 1.5rem;
+        }
+
+        .current-weather {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .temp-large {
+            font-size: 3.5rem;
+            font-weight: 700;
+        }
+
+        .condition {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .condition i {
+            font-size: 2.5rem;
+            color: #f59e0b;
+        }
+
+        .weather-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .metric {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .metric i {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+        }
+
+        .value {
+            font-weight: 600;
+            display: block;
+        }
+
+        .label {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+
+        .alert-level {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .alert-level.green {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .alert-level.yellow {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .alert-level.red {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Mini Map */
+        .mini-map {
+            height: 300px;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .map-placeholder {
+            text-align: center;
+        }
+
+        .map-placeholder i {
+            font-size: 3rem;
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+        }
+
+        .map-legend {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.85rem;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .dot.green { background: var(--success-color); }
+        .dot.yellow { background: var(--warning-color); }
+        .dot.red { background: var(--danger-color); }
+
+        /* Alerts Section */
+        .section-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .view-all {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .alerts-list {
+            padding: 1rem;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .alert-item:hover {
+            background: var(--gray-light);
+        }
+
+        .alert-item.critical {
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .alert-item.warning {
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .alert-item.info {
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .alert-icon {
+            margin-right: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .alert-item.critical .alert-icon {
+            color: var(--danger-color);
+        }
+
+        .alert-item.warning .alert-icon {
+            color: var(--warning-color);
+        }
+
+        .alert-item.info .alert-icon {
+            color: var(--primary-color);
+        }
+
+        .alert-content {
+            flex: 1;
+        }
+
+        .alert-content h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .alert-time {
+            font-size: 0.85rem;
+            color: var(--gray-color);
+        }
+
+        .alert-action {
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        /* Quick Actions Grid */
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            padding: 1.5rem;
+        }
+
+        .quick-action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 1.5rem;
+            background: var(--light-color);
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .quick-action-btn:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .quick-action-btn i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .quick-action-btn.premium {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: var(--white);
+            border: none;
+        }
+
+        .quick-action-btn.premium i {
+            color: var(--white);
+        }
+
+        /* Schedule Section */
+        .schedule-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .schedule-table {
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            background: var(--light-color);
+            color: var(--gray-color);
+            font-weight: 500;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-badge.safe {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-badge.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge.danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-icon {
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            padding: 4px;
+            margin: 0 2px;
+        }
+
+        .action-icon:hover {
+            color: var(--primary-color);
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

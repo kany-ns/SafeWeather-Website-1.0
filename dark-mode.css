@@ -1,0 +1,49 @@
+[data-theme="dark"] {
+    --light-bg: #0f172a;
+    --white: #1e293b;
+    --text-color: #f1f5f9;
+    --text-light: #94a3b8;
+    --secondary-color: #cbd5e1;
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.5);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+}
+
+[data-theme="dark"] .navbar {
+    background: rgba(15, 23, 42, 0.9);
+    border-bottom-color: rgba(255,255,255,0.05);
+}
+
+[data-theme="dark"] .feature-card,
+[data-theme="dark"] .price-card,
+[data-theme="dark"] .auth-card,
+[data-theme="dark"] .card {
+    background: #1e293b;
+    border-color: #334155;
+    color: #f1f5f9;
+}
+
+[data-theme="dark"] .btn-secondary {
+    background: #334155;
+    border-color: #475569;
+    color: white;
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+    background: #475569;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background-color: #0f172a;
+    border-color: #334155;
+    color: white;
+}
+
+[data-theme="dark"] .nav-menu a {
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .nav-menu a:hover {
+    color: var(--primary-color);
+}

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings - SafeWeather</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <h3>John Driver</h3>
+                        <p class="user-role">School Bus Driver</p>
+                        <p class="user-school">SK Batu Pahat</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="weather-report.html">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Weather Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="hazard-map.html">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>Hazard Map</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="alert.html">
+                            <i class="fas fa-bell"></i>
+                            <span>Alerts</span>
+                            <span class="badge">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="routes.html">
+                            <i class="fas fa-route"></i>
+                            <span>My Routes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Saved Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.html" class="active">
+                            <i class="fas fa-user-cog"></i>
+                            <span>Profile Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pricing.html">
+                            <i class="fas fa-crown"></i>
+                            <span>Upgrade Plan</span>
+                            <span class="premium-badge">PRO</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="weather-status">
+                    <div class="status-indicator green"></div>
+                    <span>All Systems Operational</span>
+                </div>
+                <a href="logout.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1>Profile Settings</h1>
+                    <p>Manage your account settings and preferences</p>
+                </div>
+                <div class="topbar-right">
+                    <!-- Language Toggle -->
+                    <div class="language-toggle">
+                        <button id="lang-toggle" class="lang-btn">
+                            <i class="fas fa-globe"></i>
+                            <span id="current-lang">EN</span>
+                        </button>
+                        <div class="language-dropdown">
+                            <button data-lang="en">English</button>
+                            <button data-lang="ms">Malay</button>
+                        </div>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <div class="theme-toggle">
+                        <button id="theme-toggle" class="theme-btn">
+                            <i class="fas fa-moon"></i>
+                            <span>Dark Mode</span>
+                        </button>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button class="btn-primary" onclick="saveProfile()">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Profile Content -->
+            <section class="profile-section">
+                <div class="container">
+                    <div class="profile-grid">
+                        <div class="profile-card">
+                            <div class="profile-header">
+                                <h3>Personal Information</h3>
+                            </div>
+                            <div class="profile-form">
+                                <div class="form-group">
+                                    <label for="fullName">Full Name</label>
+                                    <input type="text" id="fullName" value="John Driver">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" value="john.driver@school.edu.my">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" value="+60 12-345 6789">
+                                </div>
+                                <div class="form-group">
+                                    <label for="school">School</label>
+                                    <input type="text" id="school" value="SK Batu Pahat">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-card">
+                            <div class="profile-header">
+                                <h3>Notification Preferences</h3>
+                            </div>
+                            <div class="profile-form">
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                        Weather Alerts
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                        Route Updates
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                        System Maintenance
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                        Emergency Notifications
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="profile-card">
+                            <div class="profile-header">
+                                <h3>Security Settings</h3>
+                            </div>
+                            <div class="profile-form">
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password</label>
+                                    <input type="password" id="currentPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password</label>
+                                    <input type="password" id="newPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword">Confirm New Password</label>
+                                    <input type="password" id="confirmPassword">
+                                </div>
+                                <button class="btn-secondary" onclick="changePassword()">
+                                    Update Password
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

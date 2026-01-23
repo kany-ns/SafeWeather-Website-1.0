@@ -1,0 +1,112 @@
+@media print {
+    /* Hide unnecessary elements */
+    .navbar,
+    .footer,
+    .chatbot-container,
+    .mobile-menu-btn,
+    .print-btn,
+    .action-buttons,
+    button:not(.print-only),
+    [onclick]:not(.print-only) {
+        display: none !important;
+    }
+
+    /* Basic print styles */
+    body {
+        font-size: 12pt;
+        line-height: 1.5;
+        color: #000 !important;
+        background: #fff !important;
+    }
+
+    .container {
+        width: 100%;
+        max-width: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Typography for print */
+    h1, h2, h3, h4 {
+        color: #000 !important;
+        page-break-after: avoid;
+    }
+
+    a {
+        color: #000 !important;
+        text-decoration: underline;
+    }
+
+    a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: 0.9em;
+        font-weight: normal;
+    }
+
+    /* Tables */
+    table {
+        page-break-inside: avoid;
+        border-collapse: collapse;
+    }
+
+    th {
+        background: #f0f0f0 !important;
+        color: #000 !important;
+        -webkit-print-color-adjust: exact;
+    }
+
+    /* Report specific */
+    .report-content {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+    }
+
+    .printable {
+        display: block !important;
+    }
+
+    /* Page breaks */
+    .page-break {
+        page-break-before: always;
+    }
+
+    .no-break {
+        page-break-inside: avoid;
+    }
+
+    /* Hide background images */
+    * {
+        background-image: none !important;
+    }
+
+    /* Show URLs for links */
+    .show-urls a:after {
+        content: " (" attr(href) ")";
+    }
+
+    /* Footer for printed pages */
+    @page {
+        margin: 2cm;
+        @bottom-right {
+            content: "Page " counter(page) " of " counter(pages);
+            font-size: 10pt;
+        }
+    }
+
+    .print-header {
+        display: block !important;
+        text-align: center;
+        border-bottom: 2px solid #000;
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .print-footer {
+        display: block !important;
+        text-align: center;
+        font-size: 10pt;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid #ddd;
+    }
+}

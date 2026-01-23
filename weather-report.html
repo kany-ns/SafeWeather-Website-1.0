@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Reports - SafeWeather</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/print.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-cloud-sun-rain"></i>
+                    <h1>Safe<span>Weather</span></h1>
+                </a>
+            </div>
+
+            <!-- Language Toggle -->
+            <div class="language-toggle">
+                <button id="lang-toggle" class="lang-btn">
+                    <i class="fas fa-globe"></i>
+                    <span id="current-lang">EN</span>
+                </button>
+                <div class="language-dropdown">
+                    <button data-lang="en">English</button>
+                    <button data-lang="ms">Malay</button>
+                </div>
+            </div>
+
+            <!-- Theme Toggle -->
+            <div class="theme-toggle">
+                <button id="theme-toggle" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </button>
+            </div>
+
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="hazard-map.html"><i class="fas fa-map-marked-alt"></i> Map</a></li>
+                    <li><a href="alert.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="weather-report.html" class="active"><i class="fas fa-chart-line"></i> Reports</a></li>
+                    <li><a href="pricing.html" class="premium-link"><i class="fas fa-crown"></i> Upgrade</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Reports Header -->
+    <section class="reports-header">
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-file-alt"></i> Weather Reports</h1>
+                <p>Generate detailed weather analysis and reports for your routes</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn-primary" onclick="generateNewReport()">
+                    <i class="fas fa-plus"></i> New Report
+                </button>
+                <button class="btn-secondary" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Reports
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Report Generator -->
+    <section class="report-generator">
+        <div class="container">
+            <div class="generator-card">
+                <div class="generator-header">
+                    <h3><i class="fas fa-magic"></i> Generate Custom Report</h3>
+                    <p>Select parameters to create a detailed weather report</p>
+                </div>
+                
+                <form id="reportForm" class="generator-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marker-alt"></i> Location</label>
+                            <select id="locationSelect" class="form-control" required>
+                                <option value="">Select Location</option>
+                                <option value="batu_pahat">Batu Pahat, Johor</option>
+                                <option value="kluang">Kluang, Johor</option>
+                                <option value="muar">Muar, Johor</option>
+                                <option value="jb">Johor Bahru</option>
+                                <option value="custom">Custom Location</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" id="customLocation" style="display: none;">
+                            <label>Custom Location</label>
+                            <input type="text" placeholder="Enter location name" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar"></i> Date Range</label>
+                            <div class="date-range">
+                                <input type="date" id="startDate" class="form-control" required>
+                                <span>to</span>
+                                <input type="date" id="endDate" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-clock"></i> Time Period</label>
+                            <select id="timePeriod" class="form-control">
+                                <option value="daily">Daily Summary</option>
+                                <option value="hourly">Hourly Analysis</option>
+                                <option value="weekly">Weekly Overview</option>
+                                <option value="monthly">Monthly Report</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-chart-bar"></i> Report Type</label>
+                        <div class="report-types">
+                            <label class="report-type-option">
+                                <input type="radio" name="reportType" value="summary" checked>
+                                <div class="option-content">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Summary Report</span>
+                                    <small>Basic weather overview</small>
+                                </div>
+                            </label>
+                            <label class="report-type-option">
+                                <input type="radio" name="reportType" value="detailed">
+                                <div class="option-content">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Detailed Analysis</span>
+                                    <small>Charts and trends</small>
+                                </div>
+                            </label>
+                            <label class="report-type-option premium-option">
+                                <input type="radio" name="reportType" value="advanced">
+                                <div class="option-content">
+                                    <i class="fas fa-crown"></i>
+                                    <span>Advanced Report</span>
+                                    <small>Risk assessment + PDF export</small>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-filter"></i> Include Data</label>
+                        <div class="data-filters">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="includeTemp" checked>
+                                <span>Temperature Data</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="includeRain" checked>
+                                <span>Rainfall & Precipitation</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="includeWind" checked>
+                                <span>Wind Speed & Direction</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="includeHumidity">
+                                <span>Humidity Levels</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="includePressure">
+                                <span>Atmospheric Pressure</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="includeAlerts">
+                                <span>Weather Alerts</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-download"></i> Export Format</label>
+                        <div class="export-options">
+                            <label class="export-option">
+                                <input type="radio" name="exportFormat" value="html" checked>
+                                <i class="fas fa-code"></i>
+                                <span>Web View</span>
+                            </label>
+                            <label class="export-option">
+                                <input type="radio" name="exportFormat" value="pdf">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>PDF Document</span>
+                            </label>
+                            <label class="export-option">
+                                <input type="radio" name="exportFormat" value="excel">
+                                <i class="fas fa-file-excel"></i>
+                                <span>Excel Spreadsheet</span>
+                            </label>
+                            <label class="export-option">
+                                <input type="radio" name="exportFormat" value="csv">
+                                <i class="fas fa-file-csv"></i>
+                                <span>CSV Data</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="previewReport()">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-rocket"></i> Generate Report
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sample Report Preview -->
+    <section class="report-preview" id="reportPreview">
+        <div class="container">
+            <div class="preview-header">
+                <h3><i class="fas fa-file-contract"></i> Sample Weather Report</h3>
+                <div class="preview-actions">
+                    <button class="btn-secondary" onclick="downloadReport()">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="btn-secondary" onclick="shareReport()">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                    <button class="btn-primary" onclick="saveReport()">
+                        <i class="fas fa-save"></i> Save Report
+                    </button>
+                </div>
+            </div>
+
+            <div class="report-content printable">
+                <!-- Report Header -->
+                <div class="report-header">
+                    <div class="report-title">
+                        <h2>Weather Analysis Report</h2>
+                        <p class="report-subtitle">Batu Pahat, Johor • January 1-7, 2026</p>
+                    </div>
+                    <div class="report-meta">
+                        <div class="meta-item">
+                            <strong>Generated:</strong> January 8, 2024 10:30 AM
+                        </div>
+                        <div class="meta-item">
+                            <strong>Report ID:</strong> WR-2026-01-08-1030
+                        </div>
+                        <div class="meta-item">
+                            <strong>Status:</strong> <span class="status-badge safe">Safe Conditions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Executive Summary -->
+                <div class="report-section">
+                    <h3><i class="fas fa-chart-pie"></i> Executive Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <div class="summary-icon temp">
+                                <i class="fas fa-thermometer-half"></i>
+                            </div>
+                            <div class="summary-content">
+                                <h4>Temperature</h4>
+                                <p class="summary-value">28-32°C</p>
+                                <p class="summary-trend">Average: 30°C</p>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon rain">
+                                <i class="fas fa-cloud-rain"></i>
+                            </div>
+                            <div class="summary-content">
+                                <h4>Rainfall</h4>
+                                <p class="summary-value">45mm total</p>
+                                <p class="summary-trend">2 rainy days</p>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon wind">
+                                <i class="fas fa-wind"></i>
+                            </div>
+                            <div class="summary-content">
+                                <h4>Wind Speed</h4>
+                                <p class="summary-value">8-15 km/h</p>
+                                <p class="summary-trend">Moderate winds</p>
+                            </div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon alert">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="summary-content">
+                                <h4>Alerts</h4>
+                                <p class="summary-value">2 warnings</p>
+                                <p class="summary-trend">Low risk level</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="report-section">
+                    <h3><i class="fas fa-chart-line"></i> Weather Trends</h3>
+                    <div class="charts-grid">
+                        <div class="chart-container">
+                            <canvas id="tempChart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="rainChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Breakdown -->
+                <div class="report-section">
+                    <h3><i class="fas fa-calendar-day"></i> Daily Breakdown</h3>
+                    <div class="table-responsive">
+                        <table class="weather-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Condition</th>
+                                    <th>High Temp</th>
+                                    <th>Low Temp</th>
+                                    <th>Rainfall</th>
+                                    <th>Wind</th>
+                                    <th>Risk Level</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Dec 1</td>
+                                    <td><i class="fas fa-sun"></i> Sunny</td>
+                                    <td>32°C</td>
+                                    <td>26°C</td>
+                                    <td>0mm</td>
+                                    <td>12 km/h</td>
+                                    <td><span class="risk-low">Low</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Dec 2</td>
+                                    <td><i class="fas fa-cloud-sun"></i> Partly Cloudy</td>
+                                    <td>31°C</td>
+                                    <td>25°C</td>
+                                    <td>2mm</td>
+                                    <td>10 km/h</td>
+                                    <td><span class="risk-low">Low</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Dec 3</td>
+                                    <td><i class="fas fa-cloud-rain"></i> Light Rain</td>
+                                    <td>29°C</td>
+                                    <td>24°C</td>
+                                    <td>15mm</td>
+                                    <td>8 km/h</td>
+                                    <td><span class="risk-medium">Medium</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Dec 4</td>
+                                    <td><i class="fas fa-bolt"></i> Thunderstorm</td>
+                                    <td>28°C</td>
+                                    <td>23°C</td>
+                                    <td>28mm</td>
+                                    <td>25 km/h</td>
+                                    <td><span class="risk-high">High</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Dec 5</td>
+                                    <td><i class="fas fa-cloud"></i> Cloudy</td>
+                                    <td>30°C</td>
+                                    <td>25°C</td>
+                                    <td>0mm</td>
+                                    <td>15 km/h</td>
+                                    <td><span class="risk-low">Low</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Risk Assessment -->
+                <div class="report-section">
+                    <h3><i class="fas fa-clipboard-check"></i> Risk Assessment</h3>
+                    <div class="risk-assessment">
+                        <div class="risk-card low">
+                            <div class="risk-header">
+                                <h4><i class="fas fa-check-circle"></i> Low Risk Days</h4>
+                                <span class="risk-count">4 days</span>
+                            </div>
+                            <p>Safe for all school transport activities. Normal operations recommended.</p>
+                        </div>
+                        <div class="risk-card medium">
+                            <div class="risk-header">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Medium Risk Days</h4>
+                                <span class="risk-count">1 day</span>
+                            </div>
+                            <p>Exercise caution. Monitor weather updates and prepare alternative routes.</p>
+                        </div>
+                        <div class="risk-card high">
+                            <div class="risk-header">
+                                <h4><i class="fas fa-exclamation-circle"></i> High Risk Days</h4>
+                                <span class="risk-count">1 day</span>
+                            </div>
+                            <p>Avoid non-essential travel. Consider delaying or canceling routes if severe weather occurs.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="report-section">
+                    <h3><i class="fas fa-lightbulb"></i> Recommendations</h3>
+                    <div class="recommendations">
+                        <div class="recommendation">
+                            <div class="recommendation-icon">
+                                <i class="fas fa-route"></i>
+                            </div>
+                            <div class="recommendation-content">
+                                <h4>Route Planning</h4>
+                                <p>Avoid flood-prone areas during rainy periods. Consider alternative routes for January 3-4.</p>
+                            </div>
+                        </div>
+                        <div class="recommendation">
+                            <div class="recommendation-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="recommendation-content">
+                                <h4>Alert Setup</h4>
+                                <p>Enable SMS notifications for January 4th due to thunderstorm risk.</p>
+                            </div>
+                        </div>
+                        <div class="recommendation">
+                            <div class="recommendation-icon">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <div class="recommendation-content">
+                                <h4>Vehicle Preparation</h4>
+                                <p>Ensure windshield wipers and tires are in good condition for the rainy period.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Report Footer -->
+                <div class="report-footer">
+                    <div class="footer-content">
+                        <div class="disclaimer">
+                            <h5><i class="fas fa-exclamation-circle"></i> Disclaimer</h5>
+                            <p>This report is generated based on weather data from OpenWeather API. Always verify with official weather sources before making critical decisions.</p>
+                        </div>
+                        <div class="contact-info">
+                            <h5>SafeWeather Support</h5>
+                            <p><i class="fas fa-phone"></i> +603-1234 5678</p>
+                            <p><i class="fas fa-envelope"></i> support@safeweather.my</p>
+                        </div>
+                    </div>
+                    <div class="print-info">
+                        <p>Generated by SafeWeather System • Report ID: WR-2026-01-08-1030 • Page 1 of 1</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Saved Reports -->
+    <section class="saved-reports">
+        <div class="container">
+            <div class="section-header">
+                <h3><i class="fas fa-history"></i> Recently Saved Reports</h3>
+                <a href="reports.html" class="view-all">View All Reports</a>
+            </div>
+            
+            <div class="reports-grid">
+                <div class="report-card">
+                    <div class="report-card-header">
+                        <span class="report-type summary">Summary</span>
+                        <span class="report-date">Jan 7, 2026</span>
+                    </div>
+                    <div class="report-card-body">
+                        <h4>Weekly Weather Overview</h4>
+                        <p>Batu Pahat area analysis for school routes</p>
+                        <div class="report-stats">
+                            <span><i class="fas fa-thermometer-half"></i> 28-32°C</span>
+                            <span><i class="fas fa-tint"></i> 45mm rain</span>
+                        </div>
+                    </div>
+                    <div class="report-card-footer">
+                        <button class="btn-action" title="View">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn-action" title="Download">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn-action" title="Share">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="report-card">
+                    <div class="report-card-header">
+                        <span class="report-type detailed">Detailed</span>
+                        <span class="report-date">Jan 5, 2026</span>
+                    </div>
+                    <div class="report-card-body">
+                        <h4>Storm Risk Analysis</h4>
+                        <p>Thunderstorm impact assessment for Route BP-101</p>
+                        <div class="report-stats">
+                            <span><i class="fas fa-bolt"></i> High Risk</span>
+                            <span><i class="fas fa-exclamation-triangle"></i> 3 alerts</span>
+                        </div>
+                    </div>
+                    <div class="report-card-footer">
+                        <button class="btn-action" title="View">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn-action" title="Download">
+                            <i class="fas fa-download"></i>
+                        </button>
+                        <button class="btn-action" title="Share">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="report-card premium-report">
+                    <div class="report-card-header">
+                        <span class="report-type advanced">Advanced</span>
+                        <span class="report-date">Jan 3, 2026</span>
+                    </div>
+                    <div class="report-card-body">
+                        <h4>Monthly Safety Report</h4>
+                        <p>Complete risk assessment with route recommendations</p>
+                        <div class="report-stats">
+                            <span><i class="fas fa-chart-line"></i> Full Analysis</span>
+                            <span><i class="fas fa-file-pdf"></i> PDF Export</span>
+                        </div>
+                    </div>
+                    <div class="report-card-footer">
+                        <button class="btn-action premium" title="Premium Feature">
+                            <i class="fas fa-crown"></i>
+                        </button>
+                        <button class="btn-action" title="Upgrade to Access">
+                            <i class="fas fa-lock"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reports Styles -->
+    <style>
+        .reports-header {
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+
+        .reports-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-content h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .header-content p {
+            color: var(--gray-color);
+            font-size: 1.1rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Report Generator */
+        .report-generator {
+            padding: 2rem 0;
+        }
+
+        .generator-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .generator-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+        }
+
+        .generator-header h3 {
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+
+        .generator-form {
+            padding: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+        }
+
+        .date-range {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .date-range span {
+            color: var(--gray-color);
+        }
+
+        /* Report Types */
+        .report-types {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .report-types {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .report-type-option {
+            position: relative;
+        }
+
+        .report-type-option input {
+            display: none;
+        }
+
+        .option-content {
+            padding: 1.5rem;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .option-content i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .report-type-option input:checked + .option-content {
+            border-color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.1);
+        }
+
+        .option-content span {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .option-content small {
+            color: var(--gray-color);
+            font-size: 0.85rem;
+        }
+
+        .premium-option .option-content i {
+            color: #f59e0b;
+        }
+
+        .premium-option input:checked + .option-content {
+            border-color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        /* Data Filters */
+        .data-filters {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .data-filters {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: var(--light-color);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+        }
+
+        /* Export Options */
+        .export-options {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .export-option {
+            position: relative;
+        }
+
+        .export-option input {
+            display: none;
+        }
+
+        .export-option i {
+            display: block;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--gray-color);
+        }
+
+        .export-option input:checked + i {
+            color: var(--primary-color);
+        }
+
+        .export-option span {
+            font-size: 0.9rem;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        /* Report Preview */
+        .report-preview {
+            padding: 2rem 0;
+            background: var(--light-color);
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .preview-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .report-content {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: 3rem;
+        }
+
+        .report-header {
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .report-title h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .report-subtitle {
+            color: var(--gray-color);
+            font-size: 1.1rem;
+        }
+
+        .report-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .meta-item {
+            padding: 8px 16px;
+            background: var(--light-color);
+            border-radius: var(--radius-md);
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-badge.safe {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* Summary Grid */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 992px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .summary-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--light-color);
+            border-radius: var(--radius-lg);
+        }
+
+        .summary-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        .summary-icon.temp { background: #ef4444; }
+        .summary-icon.rain { background: #3b82f6; }
+        .summary-icon.wind { background: #8b5cf6; }
+        .summary-icon.alert { background: #f59e0b; }
+
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-trend {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        /* Charts */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-light);
+        }
+
+        /* Tables */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .weather-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .weather-table th {
+            background: var(--light-color);
+            padding: 12px;
+            text-align: left;
+            font-weight: 500;
+            color: var(--gray-color);
+        }
+
+        .weather-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .weather-table i {
+            margin-right: 8px;
+            color: #f59e0b;
+        }
+
+        .risk-low, .risk-medium, .risk-high {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .risk-low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .risk-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .risk-high {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Risk Assessment */
+        .risk-assessment {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 992px) {
+            .risk-assessment {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .risk-card {
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+        }
+
+        .risk-card.low {
+            background: #dcfce7;
+            border-left: 4px solid #10b981;
+        }
+
+        .risk-card.medium {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .risk-card.high {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+
+        .risk-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .risk-header h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .risk-count {
+            background: var(--white);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* Recommendations */
+        .recommendations {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        @media (max-width: 992px) {
+            .recommendations {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .recommendation {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--light-color);
+            border-radius: var(--radius-lg);
+        }
+
+        .recommendation-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.25rem;
+        }
+
+        /* Report Footer */
+        .report-footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--gray-light);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .disclaimer {
+            padding: 1.5rem;
+            background: #fef3c7;
+            border-radius: var(--radius-lg);
+        }
+
+        .print-info {
+            text-align: center;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            padding: 1rem;
+            background: var(--light-color);
+            border-radius: var(--radius-md);
+        }
+
+        /* Saved Reports */
+        .saved-reports {
+            padding: 2rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            .reports-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .reports-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .report-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .report-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: var(--light-color);
+        }
+
+        .report-type {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .report-type.summary {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .report-type.detailed {
+            background: #f0f9ff;
+            color: #0c4a6e;
+        }
+
+        .report-type.advanced {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .report-date {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        .report-card-body {
+            padding: 1.5rem;
+        }
+
+        .report-card-body h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        .report-card-body p {
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .report-stats {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .report-stats span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .report-card-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-light);
+        }
+
+        .btn-action {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--gray-light);
+            background: var(--white);
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-action:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        .btn-action.premium {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: var(--white);
+            border: none;
+        }
+
+        .premium-report {
+            border: 2px solid #f59e0b;
+        }
+    </style>
+
+    <script src="js/main.js"></script>
+    <script src="js/reports.js"></script>
+</body>
+</html>

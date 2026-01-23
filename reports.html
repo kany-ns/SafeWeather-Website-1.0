@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Reports - SafeWeather</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <h3>John Driver</h3>
+                        <p class="user-role">School Bus Driver</p>
+                        <p class="user-school">SK Batu Pahat</p>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="weather-report.html">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Weather Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="hazard-map.html">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>Hazard Map</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="alert.html">
+                            <i class="fas fa-bell"></i>
+                            <span>Alerts</span>
+                            <span class="badge">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="routes.html">
+                            <i class="fas fa-route"></i>
+                            <span>My Routes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="reports.html" class="active">
+                            <i class="fas fa-file-alt"></i>
+                            <span>Saved Reports</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="profile.html">
+                            <i class="fas fa-user-cog"></i>
+                            <span>Profile Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="pricing.html">
+                            <i class="fas fa-crown"></i>
+                            <span>Upgrade Plan</span>
+                            <span class="premium-badge">PRO</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="weather-status">
+                    <div class="status-indicator green"></div>
+                    <span>All Systems Operational</span>
+                </div>
+                <a href="logout.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1>Saved Reports</h1>
+                    <p>Access your saved weather reports and analysis</p>
+                </div>
+                <div class="topbar-right">
+                    <!-- Language Toggle -->
+                    <div class="language-toggle">
+                        <button id="lang-toggle" class="lang-btn">
+                            <i class="fas fa-globe"></i>
+                            <span id="current-lang">EN</span>
+                        </button>
+                        <div class="language-dropdown">
+                            <button data-lang="en">English</button>
+                            <button data-lang="ms">Malay</button>
+                        </div>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <div class="theme-toggle">
+                        <button id="theme-toggle" class="theme-btn">
+                            <i class="fas fa-moon"></i>
+                            <span>Dark Mode</span>
+                        </button>
+                    </div>
+
+                    <div class="quick-actions">
+                        <button class="btn-primary" onclick="generateNewReport()">
+                            <i class="fas fa-plus"></i> New Report
+                        </button>
+                        <button class="btn-secondary" onclick="exportAllReports()">
+                            <i class="fas fa-download"></i> Export All
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Reports Content -->
+            <section class="reports-section">
+                <div class="container">
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <div class="report-header">
+                                <h3>Weekly Weather Summary</h3>
+                                <span class="report-date">Jan 15, 2025</span>
+                            </div>
+                            <div class="report-meta">
+                                <span class="report-type">Weather Analysis</span>
+                                <span class="report-size">2.4 MB</span>
+                            </div>
+                            <div class="report-actions">
+                                <button class="btn-sm" onclick="viewReport('weekly-2025-01-15')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn-sm" onclick="downloadReport('weekly-2025-01-15')">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                                <button class="btn-sm danger" onclick="deleteReport('weekly-2025-01-15')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="report-card">
+                            <div class="report-header">
+                                <h3>Route Safety Assessment</h3>
+                                <span class="report-date">Jan 10, 2025</span>
+                            </div>
+                            <div class="report-meta">
+                                <span class="report-type">Safety Report</span>
+                                <span class="report-size">1.8 MB</span>
+                            </div>
+                            <div class="report-actions">
+                                <button class="btn-sm" onclick="viewReport('safety-2025-01-10')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn-sm" onclick="downloadReport('safety-2025-01-10')">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                                <button class="btn-sm danger" onclick="deleteReport('safety-2025-01-10')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="report-card">
+                            <div class="report-header">
+                                <h3>Hazard Map Analysis</h3>
+                                <span class="report-date">Jan 5, 2025</span>
+                            </div>
+                            <div class="report-meta">
+                                <span class="report-type">Hazard Analysis</span>
+                                <span class="report-size">3.2 MB</span>
+                            </div>
+                            <div class="report-actions">
+                                <button class="btn-sm" onclick="viewReport('hazard-2025-01-05')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="btn-sm" onclick="downloadReport('hazard-2025-01-05')">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                                <button class="btn-sm danger" onclick="deleteReport('hazard-2025-01-05')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

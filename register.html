@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - SafeWeather</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow-x: hidden;
+        }
+        [data-theme="dark"] body { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); }
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        [data-theme="dark"] .auth-card { background: #1e293b; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .auth-header { text-align: center; margin-bottom: 2rem; }
+        .btn-full { width: 100%; margin-top: 1rem; }
+        .auth-lang { position: absolute; top: 20px; right: 20px; }
+        
+        /* Form styling uses same classes as login, inherited from style.css or defined inline there */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-lang">
+        <button id="lang-toggle" class="btn-icon"><i class="fas fa-globe"></i></button>
+        <div class="language-dropdown" style="display: none;">
+            <button data-lang="en">English</button>
+            <button data-lang="ms">Bahasa Melayu</button>
+        </div>
+    </div>
+
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2 data-lang="auth_register_title">Create Account</h2>
+        </div>
+        
+        <form id="registerForm">
+            <div class="form-row">
+                <div>
+                    <label data-lang="auth_name_first">First Name</label>
+                    <input type="text" name="firstName" class="form-control" required>
+                </div>
+                <div>
+                    <label data-lang="auth_name_last">Last Name</label>
+                    <input type="text" name="lastName" class="form-control" required>
+                </div>
+            </div>
+
+            <label data-lang="auth_email">Email Address</label>
+            <input type="email" name="email" class="form-control" required>
+
+            <label data-lang="auth_role">I am a...</label>
+            <select name="userType" class="form-control" required>
+                <option value="driver" data-lang="role_driver">Bus Driver</option>
+                <option value="admin" data-lang="role_admin">School Admin</option>
+                <option value="parent" data-lang="role_parent">Parent</option>
+            </select>
+
+            <div id="schoolInfo">
+                <label data-lang="auth_school">School Name</label>
+                <input type="text" name="schoolName" class="form-control">
+            </div>
+
+            <div class="form-row">
+                <div>
+                    <label data-lang="auth_password">Password</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <div>
+                    <label data-lang="auth_confirm_password">Confirm Password</label>
+                    <input type="password" name="confirmPassword" class="form-control" required>
+                </div>
+            </div>
+
+            <label>
+                <input type="checkbox" name="terms" required> 
+                <span data-lang="auth_terms">I agree to the Terms of Service</span>
+            </label>
+            
+            <button type="submit" class="btn-primary btn-full" data-lang="auth_btn_register">Sign Up</button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 1.5rem;">
+            <span data-lang="auth_has_account">Already have an account?</span> 
+            <a href="login.html" data-lang="nav_login">Login</a>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/language-toggle.js"></script>
+</body>
+</html>

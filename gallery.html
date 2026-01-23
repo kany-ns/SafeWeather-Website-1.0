@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Gallery - SafeWeather</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Gallery specific styles will be added here */
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-cloud-sun-rain"></i>
+                    <h1>Safe<span>Weather</span></h1>
+                </a>
+            </div>
+
+            <!-- Language Toggle -->
+            <div class="language-toggle">
+                <button id="lang-toggle" class="lang-btn">
+                    <i class="fas fa-globe"></i>
+                    <span id="current-lang">EN</span>
+                </button>
+                <div class="language-dropdown">
+                    <button data-lang="en">English</button>
+                    <button data-lang="ms">Malay</button>
+                </div>
+            </div>
+
+            <!-- Theme Toggle -->
+            <div class="theme-toggle">
+                <button id="theme-toggle" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </button>
+            </div>
+
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="weather-report.html"><i class="fas fa-chart-line"></i> Reports</a></li>
+                    <li><a href="hazard-map.html"><i class="fas fa-map-marked-alt"></i> Hazard Map</a></li>
+                    <li><a href="alert.html"><i class="fas fa-bell"></i> Alerts</a></li>
+                    <li><a href="gallery.html" class="active"><i class="fas fa-images"></i> Gallery</a></li>
+                    <li><a href="login.html" class="btn-secondary"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Gallery Hero -->
+    <section class="gallery-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1><i class="fas fa-images"></i> Project Gallery</h1>
+                <p>Explore our collection of weather safety projects, success stories, and visual documentation</p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="number">48</span>
+                        <span class="label">Projects</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">156</span>
+                        <span class="label">Images</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">23</span>
+                        <span class="label">Schools</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">12</span>
+                        <span class="label">Months</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Controls -->
+    <section class="gallery-controls">
+        <div class="container">
+            <div class="controls-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="gallerySearch" placeholder="Search projects, schools, or locations...">
+                    <button class="search-btn" onclick="searchGallery()">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label><i class="fas fa-filter"></i> Filter by:</label>
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="all">All Categories</option>
+                            <option value="weather">Weather Events</option>
+                            <option value="hazard">Hazard Zones</option>
+                            <option value="school">School Projects</option>
+                            <option value="training">Training Sessions</option>
+                            <option value="success">Success Stories</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label><i class="fas fa-calendar"></i> Date:</label>
+                        <select id="dateFilter" class="filter-select">
+                            <option value="all">All Time</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="quarter">This Quarter</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label><i class="fas fa-school"></i> School:</label>
+                        <select id="schoolFilter" class="filter-select">
+                            <option value="all">All Schools</option>
+                            <option value="skbp">SK Batu Pahat</option>
+                            <option value="smkti">SMK Tunku Ismail</option>
+                            <option value="smkdb">SMK Dato' Bentara</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <button class="btn-secondary" onclick="clearFilters()">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                        <button class="btn-primary" onclick="applyFilters()">
+                            <i class="fas fa-check"></i> Apply
+                        </button>
+                    </div>
+                </div>
+
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="grid" onclick="changeView('grid')">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-btn" data-view="list" onclick="changeView('list')">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button class="view-btn" data-view="masonry" onclick="changeView('masonry')">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="btn-secondary" onclick="downloadGallery()">
+                        <i class="fas fa-download"></i> Download All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="gallery-main">
+        <div class="container">
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Project 1 -->
+                <div class="gallery-item" data-category="weather" data-school="skbp" data-date="2024-12">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1592210454359-9043f067919b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
+                             alt="Weather Monitoring Station">
+                        <div class="image-overlay">
+                            <button class="view-btn" onclick="openLightbox(1)">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button class="download-btn" onclick="downloadImage(1)">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <span class="item-badge weather">Weather</span>
+                    </div>
+                    <div class="item-content">
+                        <h3>Weather Station Installation</h3>
+                        <p class="item-description">
+                            Installation of automated weather monitoring stations at SK Batu Pahat for real-time data collection.
+                        </p>
+                        <div class="item-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-calendar"></i> Dec 2024
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-school"></i> SK Batu Pahat
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-images"></i> 8 photos
+                            </span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="action-btn" onclick="viewProject(1)">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button class="action-btn" onclick="shareProject(1)">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="gallery-item" data-category="hazard" data-school="smkti" data-date="2024-11">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1560032779-0a8809186efd?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
+                             alt="Flood Zone Mapping">
+                        <div class="image-overlay">
+                            <button class="view-btn" onclick="openLightbox(2)">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button class="download-btn" onclick="downloadImage(2)">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <span class="item-badge hazard">Hazard Zone</span>
+                    </div>
+                    <div class="item-content">
+                        <h3>Flood Zone Identification</h3>
+                        <p class="item-description">
+                            Mapping of flood-prone areas around SMK Tunku Ismail to establish safe evacuation routes.
+                        </p>
+                        <div class="item-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-calendar"></i> Nov 2024
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-school"></i> SMK Tunku Ismail
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-images"></i> 12 photos
+                            </span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="action-btn" onclick="viewProject(2)">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button class="action-btn" onclick="shareProject(2)">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="gallery-item" data-category="training" data-school="all" data-date="2024-10">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
+                             alt="Driver Training Session">
+                        <div class="image-overlay">
+                            <button class="view-btn" onclick="openLightbox(3)">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button class="download-btn" onclick="downloadImage(3)">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <span class="item-badge training">Training</span>
+                    </div>
+                    <div class="item-content">
+                        <h3>Driver Safety Training</h3>
+                        <p class="item-description">
+                            Comprehensive weather safety training for school bus drivers across multiple schools.
+                        </p>
+                        <div class="item-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-calendar"></i> Oct 2024
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-users"></i> 45 drivers
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-images"></i> 24 photos
+                            </span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="action-btn" onclick="viewProject(3)">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button class="action-btn" onclick="shareProject(3)">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="gallery-item" data-category="success" data-school="skbp" data-date="2024-09">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
+                             alt="Emergency Drill Success">
+                        <div class="image-overlay">
+                            <button class="view-btn" onclick="openLightbox(4)">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button class="download-btn" onclick="downloadImage(4)">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <span class="item-badge success">Success Story</span>
+                    </div>
+                    <div class="item-content">
+                        <h3>Emergency Response Drill</h3>
+                        <p class="item-description">
+                            Successful evacuation drill during simulated flood emergency at SK Batu Pahat.
+                        </p>
+                        <div class="item-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-calendar"></i> Sep 2024
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-school"></i> SK Batu Pahat
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-images"></i> 16 photos
+                            </span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="action-btn" onclick="viewProject(4)">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button class="action-btn" onclick="shareProject(4)">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="gallery-item" data-category="school" data-school="smkdb" data-date="2024-08">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
+                             alt="School Safety Equipment">
+                        <div class="image-overlay">
+                            <button class="view-btn" onclick="openLightbox(5)">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button class="download-btn" onclick="downloadImage(5)">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <span class="item-badge school">School Project</span>
+                    </div>
+                    <div class="item-content">
+                        <h3>Safety Equipment Distribution</h3>
+                        <p class="item-description">
+                            Distribution of emergency weather kits and safety equipment to SMK Dato' Bentara.
+                        </p>
+                        <div class="item-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-calendar"></i> Aug 2024
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-school"></i> SMK Dato' Bentara
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-images"></i> 10 photos
+                            </span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="action-btn" onclick="viewProject(5)">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button class="action-btn" onclick="shareProject(5)">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="gallery-item" data-category="weather" data-school="all" data-date="2024-07">
+                    <div class="item-image">
+                        <img src="https://images.unsplash.com/photo-1593069567131-53a0614dde1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80" 
+                             alt="Data Analysis Workshop">
+                        <div class="image-overlay">
+                            <button class="view-btn" onclick="openLightbox(6)">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                            <button class="download-btn" onclick="downloadImage(6)">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                        <span class="item-badge weather">Weather Data</span>
+                    </div>
+                    <div class="item-content">
+                        <h3>Weather Data Workshop</h3>
+                        <p class="item-description">
+                            Workshop for teachers on interpreting weather data and making safety decisions.
+                        </p>
+                        <div class="item-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-calendar"></i> Jul 2024
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-chalkboard-teacher"></i> 32 teachers
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-images"></i> 18 photos
+                            </span>
+                        </div>
+                        <div class="item-actions">
+                            <button class="action-btn" onclick="viewProject(6)">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button class="action-btn" onclick="shareProject(6)">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more-container">
+                <button class="btn-primary" id="loadMoreBtn" onclick="loadMoreProjects()">
+                    <i class="fas fa-plus"></i> Load More Projects
+                </button>
+                <p class="showing-text">Showing 6 of 48 projects</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div id="lightboxModal" class="lightbox-modal">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="lightbox-nav prev" onclick="prevImage()">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="lightbox-nav next" onclick="nextImage()">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <div class="lightbox-body">
+                <div class="lightbox-image">
+                    <img id="lightboxImg" src="" alt="">
+                </div>
+                <div class="lightbox-info">
+                    <h3 id="lightboxTitle"></h3>
+                    <p id="lightboxDescription"></p>
+                    <div class="lightbox-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span id="lightboxDate"></span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-school"></i>
+                            <span id="lightboxSchool"></span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-tag"></i>
+                            <span id="lightboxCategory"></span>
+                        </div>
+                    </div>
+                    <div class="lightbox-actions">
+                        <button class="btn-secondary" onclick="downloadCurrentImage()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <button class="btn-secondary" onclick="shareCurrentImage()">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                        <button class="btn-primary" onclick="viewFullProject()">
+                            <i class="fas fa-external-link-alt"></i> View Project
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Styles -->
+    <style>
+        .gallery-hero {
+            padding: 4rem 0;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0c4a6e 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .gallery-hero h1 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .gallery-hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .hero-stats .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-stats .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .hero-stats .label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .gallery-controls {
+            padding: 2rem 0;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .controls-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .search-box {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 48px;
+            border: 2px solid var(--gray-light);
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: var(--dark-color);
+            font-size: 0.9rem;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            background: white;
+            min-width: 150px;
+        }
+
+        .view-controls {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .view-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--gray-light);
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-color);
+        }
+
+        .view-btn.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .gallery-main {
+            padding: 2rem 0 4rem;
+            background: var(--light-color);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .item-image {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .item-image img {
+            transform: scale(1.05);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .image-overlay button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: white;
+            color: var(--dark-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .image-overlay button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .item-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .item-badge.weather { background: #3b82f6; }
+        .item-badge.hazard { background: #ef4444; }
+        .item-badge.training { background: #8b5cf6; }
+        .item-badge.success { background: #10b981; }
+        .item-badge.school { background: #f59e0b; }
+
+        .item-content {
+            padding: 1.5rem;
+        }
+
+        .item-content h3 {
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+            color: var(--dark-color);
+        }
+
+        .item-description {
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .item-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: var(--gray-color);
+        }
+
+        .meta-item i {
+            font-size: 0.9rem;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 8px 12px;
+            background: var(--light-color);
+            border: 1px solid var(--gray-light);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .load-more-container {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .showing-text {
+            margin-top: 1rem;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+
+        /* Lightbox Styles */
+        .lightbox-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-modal.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            cursor: pointer;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            cursor: pointer;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-nav.prev {
+            left: 20px;
+        }
+
+        .lightbox-nav.next {
+            right: 20px;
+        }
+
+        .lightbox-body {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            height: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .lightbox-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .lightbox-image {
+            height: 70vh;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .lightbox-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .lightbox-info {
+            padding: 2rem;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .lightbox-info h3 {
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .lightbox-info p {
+            color: var(--gray-color);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .lightbox-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--light-color);
+            border-radius: 8px;
+        }
+
+        .lightbox-meta .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lightbox-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        /* List View */
+        .gallery-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .gallery-grid.list-view .gallery-item {
+            display: flex;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid.list-view .gallery-item {
+                flex-direction: column;
+            }
+        }
+
+        .gallery-grid.list-view .item-image {
+            width: 300px;
+            height: 200px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid.list-view .item-image {
+                width: 100%;
+                height: 250px;
+            }
+        }
+
+        /* Masonry View */
+        .gallery-grid.masonry-view {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-auto-rows: masonry;
+            grid-auto-flow: dense;
+        }
+
+        .gallery-grid.masonry-view .gallery-item {
+            height: auto;
+        }
+
+        .gallery-grid.masonry-view .item-image {
+            height: 200px;
+        }
+    </style>
+
+    <script src="js/main.js"></script>
+    <script src="js/gallery.js"></script>
+</body>
+</html>

@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - SafeWeather</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dark-mode.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Admin Container -->
+    <div class="admin-container">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-header">
+                <div class="admin-logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <h2>SafeWeather <span>Admin</span></h2>
+                </div>
+                <div class="admin-status">
+                    <div class="status-indicator online"></div>
+                    <span>System Online</span>
+                </div>
+            </div>
+
+            <nav class="admin-nav">
+                <div class="nav-section">
+                    <h4><i class="fas fa-tachometer-alt"></i> Dashboard</h4>
+                    <ul>
+                        <li><a href="#overview" class="active"><i class="fas fa-chart-line"></i> Overview</a></li>
+                        <li><a href="#analytics"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                        <li><a href="#reports"><i class="fas fa-file-alt"></i> System Reports</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h4><i class="fas fa-users"></i> User Management</h4>
+                    <ul>
+                        <li><a href="#all-users"><i class="fas fa-user-friends"></i> All Users</a></li>
+                        <li><a href="#drivers"><i class="fas fa-bus"></i> Drivers</a></li>
+                        <li><a href="#schools"><i class="fas fa-school"></i> Schools</a></li>
+                        <li><a href="#admins"><i class="fas fa-user-shield"></i> Administrators</a></li>
+                        <li><a href="#pending"><i class="fas fa-clock"></i> Pending Approval</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h4><i class="fas fa-cloud-sun-rain"></i> Weather Management</h4>
+                    <ul>
+                        <li><a href="#alerts-config"><i class="fas fa-bell"></i> Alert Configuration</a></li>
+                        <li><a href="#hazard-zones"><i class="fas fa-map-marked-alt"></i> Hazard Zones</a></li>
+                        <li><a href="#weather-data"><i class="fas fa-database"></i> Weather Data</a></li>
+                        <li><a href="#api-settings"><i class="fas fa-cog"></i> API Settings</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h4><i class="fas fa-shopping-cart"></i> Subscriptions</h4>
+                    <ul>
+                        <li><a href="#plans"><i class="fas fa-crown"></i> Plan Management</a></li>
+                        <li><a href="#payments"><i class="fas fa-credit-card"></i> Payment History</a></li>
+                        <li><a href="#invoices"><i class="fas fa-receipt"></i> Invoices</a></li>
+                        <li><a href="#billing"><i class="fas fa-money-bill-wave"></i> Billing Settings</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h4><i class="fas fa-cog"></i> System Settings</h4>
+                    <ul>
+                        <li><a href="#system-config"><i class="fas fa-sliders-h"></i> Configuration</a></li>
+                        <li><a href="#email-templates"><i class="fas fa-envelope"></i> Email Templates</a></li>
+                        <li><a href="#notifications"><i class="fas fa-broadcast-tower"></i> Notifications</a></li>
+                        <li><a href="#backup"><i class="fas fa-database"></i> Backup & Restore</a></li>
+                        <li><a href="#logs"><i class="fas fa-clipboard-list"></i> System Logs</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <h4><i class="fas fa-life-ring"></i> Support</h4>
+                    <ul>
+                        <li><a href="#support-tickets"><i class="fas fa-ticket-alt"></i> Support Tickets</a></li>
+                        <li><a href="#feedback"><i class="fas fa-comment-dots"></i> User Feedback</a></li>
+                        <li><a href="#documentation"><i class="fas fa-book"></i> Documentation</a></li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="admin-footer">
+                <div class="admin-profile">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h4>System Administrator</h4>
+                        <p>admin@safeweather.my</p>
+                    </div>
+                </div>
+                <a href="index.html" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Admin Content -->
+        <main class="admin-main">
+            <!-- Top Bar -->
+            <header class="admin-topbar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search users, reports, settings...">
+                </div>
+                
+                <div class="admin-actions">
+                    <!-- Language Toggle -->
+                    <div class="language-toggle">
+                        <button id="lang-toggle" class="lang-btn">
+                            <i class="fas fa-globe"></i>
+                            <span id="current-lang">EN</span>
+                        </button>
+                        <div class="language-dropdown">
+                            <button data-lang="en">English</button>
+                            <button data-lang="ms">Malay</button>
+                        </div>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <div class="theme-toggle">
+                        <button id="theme-toggle" class="theme-btn">
+                            <i class="fas fa-moon"></i>
+                            <span>Dark Mode</span>
+                        </button>
+                    </div>
+
+                    <button class="action-btn" onclick="refreshData()">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Refresh</span>
+                    </button>
+                    <button class="action-btn" onclick="showNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">5</span>
+                    </button>
+                    <button class="action-btn" onclick="exportData()">
+                        <i class="fas fa-download"></i>
+                        <span>Export</span>
+                    </button>
+                    <button class="action-btn danger" onclick="systemReboot()">
+                        <i class="fas fa-power-off"></i>
+                        <span>System Reboot</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Overview -->
+            <section id="overview" class="admin-section active">
+                <div class="section-header">
+                    <h1><i class="fas fa-chart-line"></i> System Overview</h1>
+                    <div class="date-selector">
+                        <select>
+                            <option>Last 24 Hours</option>
+                            <option>Last 7 Days</option>
+                            <option selected>Last 30 Days</option>
+                            <option>Last Quarter</option>
+                            <option>Custom Range</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3><i class="fas fa-users"></i> Total Users</h3>
+                            <span class="stat-change up">+12%</span>
+                        </div>
+                        <div class="stat-value">1,847</div>
+                        <div class="stat-breakdown">
+                            <span>Drivers: 1,234</span>
+                            <span>Schools: 45</span>
+                            <span>Admins: 8</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3><i class="fas fa-bell"></i> Active Alerts</h3>
+                            <span class="stat-change up">+8%</span>
+                        </div>
+                        <div class="stat-value">156</div>
+                        <div class="stat-breakdown">
+                            <span class="alert-critical">Critical: 12</span>
+                            <span class="alert-warning">Warning: 48</span>
+                            <span class="alert-info">Info: 96</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3><i class="fas fa-cloud-rain"></i> Weather Events</h3>
+                            <span class="stat-change down">-5%</span>
+                        </div>
+                        <div class="stat-value">89</div>
+                        <div class="stat-breakdown">
+                            <span>Storms: 23</span>
+                            <span>Floods: 15</span>
+                            <span>Heat: 51</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <h3><i class="fas fa-money-bill-wave"></i> Revenue</h3>
+                            <span class="stat-change up">+24%</span>
+                        </div>
+                        <div class="stat-value">RM 8,450</div>
+                        <div class="stat-breakdown">
+                            <span>This Month</span>
+                            <span>+RM 1,650 from last</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-row">
+                    <div class="chart-container large">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-area"></i> User Growth</h3>
+                            <div class="chart-actions">
+                                <button class="chart-action-btn active">Weekly</button>
+                                <button class="chart-action-btn">Monthly</button>
+                                <button class="chart-action-btn">Yearly</button>
+                            </div>
+                        </div>
+                        <div class="chart-placeholder">
+                            <canvas id="userGrowthChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-pie"></i> User Distribution</h3>
+                        </div>
+                        <div class="chart-placeholder">
+                            <canvas id="userDistributionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-section">
+                    <div class="section-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-history"></i> Recent Activity</h3>
+                            <a href="#all-activity" class="view-all">View All</a>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon success">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>New User Registration</h4>
+                                    <p>John Driver registered as School Bus Driver</p>
+                                    <span class="activity-time">10 minutes ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>Alert Triggered</h4>
+                                    <p>Thunderstorm warning for Batu Pahat area</p>
+                                    <span class="activity-time">1 hour ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon info">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>Payment Received</h4>
+                                    <p>SK Batu Pahat upgraded to Premium Plan</p>
+                                    <span class="activity-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon danger">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <h4>System Warning</h4>
+                                    <p>High server load detected on weather API</p>
+                                    <span class="activity-time">3 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions-section">
+                    <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                    <div class="quick-actions-grid">
+                        <button class="quick-action-btn" onclick="openUserManagement()">
+                            <i class="fas fa-user-plus"></i>
+                            <span>Add New User</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="sendBulkAlert()">
+                            <i class="fas fa-bullhorn"></i>
+                            <span>Send Alert</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="generateReport()">
+                            <i class="fas fa-file-export"></i>
+                            <span>Generate Report</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="openSystemConfig()">
+                            <i class="fas fa-cogs"></i>
+                            <span>System Settings</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="backupDatabase()">
+                            <i class="fas fa-database"></i>
+                            <span>Backup Database</span>
+                        </button>
+                        <button class="quick-action-btn" onclick="viewLogs()">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>View Logs</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- User Management Section -->
+            <section id="all-users" class="admin-section">
+                <div class="section-header">
+                    <h1><i class="fas fa-user-friends"></i> User Management</h1>
+                    <div class="section-actions">
+                        <button class="btn-primary" onclick="addNewUser()">
+                            <i class="fas fa-user-plus"></i> Add User
+                        </button>
+                        <button class="btn-secondary" onclick="exportUsers()">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+
+                <!-- User Filters -->
+                <div class="filters-section">
+                    <div class="filter-group">
+                        <label><i class="fas fa-filter"></i> Filter By:</label>
+                        <select class="filter-select">
+                            <option>All Users</option>
+                            <option>Active Users</option>
+                            <option>Inactive Users</option>
+                            <option>Premium Users</option>
+                            <option>Free Users</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label><i class="fas fa-user-tag"></i> User Type:</label>
+                        <select class="filter-select">
+                            <option>All Types</option>
+                            <option>Drivers</option>
+                            <option>School Admins</option>
+                            <option>Parents</option>
+                            <option>System Admins</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label><i class="fas fa-school"></i> School:</label>
+                        <select class="filter-select">
+                            <option>All Schools</option>
+                            <option>SK Batu Pahat</option>
+                            <option>SMK Tunku Ismail</option>
+                            <option>SMK Dato' Bentara Luar</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <button class="btn-secondary" onclick="clearFilters()">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                        <button class="btn-primary" onclick="applyFilters()">
+                            <i class="fas fa-check"></i> Apply
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Users Table -->
+                <div class="table-section">
+                    <div class="table-responsive">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="selectAll">
+                                            <span></span>
+                                        </label>
+                                    </th>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Type</th>
+                                    <th>School</th>
+                                    <th>Plan</th>
+                                    <th>Status</th>
+                                    <th>Last Login</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox">
+                                            <span></span>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <div class="user-cell">
+                                            <div class="user-avatar">
+                                                <i class="fas fa-user"></i>
+                                            </div>
+                                            <div class="user-info">
+                                                <strong>John Driver</strong>
+                                                <small>ID: USR-001</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>john.driver@school.edu.my</td>
+                                    <td>
+                                        <span class="badge badge-driver">
+                                            <i class="fas fa-bus"></i> Driver
+                                        </span>
+                                    </td>
+                                    <td>SK Batu Pahat</td>
+                                    <td>
+                                        <span class="badge badge-free">Free</span>
+                                    </td>
+                                    <td>
+                                        <span class="status-badge active">Active</span>
+                                    </td>
+                                    <td>Today, 08:30</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="action-btn view" title="View Profile">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="action-btn edit" title="Edit User">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="action-btn message" title="Send Message">
+                                                <i class="fas fa-envelope"></i>
+                                            </button>
+                                            <button class="action-btn delete" title="Delete User">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- More user rows would go here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="page-btn" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <span class="page-ellipsis">...</span>
+                    <button class="page-btn">10</button>
+                    <button class="page-btn">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Add more admin sections as needed -->
+        </main>
+    </div>
+
+    <!-- Admin Styles -->
+    <style>
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+            background: #f8fafc;
+        }
+
+        .admin-sidebar {
+            width: 280px;
+            background: #1e293b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #334155;
+        }
+
+        .admin-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .admin-logo i {
+            font-size: 2rem;
+            color: #3b82f6;
+        }
+
+        .admin-logo h2 {
+            font-size: 1.25rem;
+            color: white;
+        }
+
+        .admin-logo span {
+            color: #3b82f6;
+        }
+
+        .admin-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status-indicator.online {
+            background: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+
+        .admin-nav {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-section h4 {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-section ul {
+            list-style: none;
+        }
+
+        .nav-section li {
+            margin-bottom: 4px;
+        }
+
+        .nav-section a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .nav-section a:hover,
+        .nav-section a.active {
+            background: #334155;
+            color: white;
+        }
+
+        .nav-section a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .admin-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #334155;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .profile-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-info h4 {
+            font-size: 0.9rem;
+            margin-bottom: 2px;
+        }
+
+        .profile-info p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            padding: 10px;
+            background: #334155;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: #475569;
+        }
+
+        .admin-main {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .admin-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 400px;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 12px 10px 40px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background: white;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .action-btn:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+        .action-btn.danger {
+            color: #ef4444;
+            border-color: #fecaca;
+        }
+
+        .action-btn.danger:hover {
+            background: #fee2e2;
+        }
+
+        .notification-badge {
+            background: #ef4444;
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h1 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+        }
+
+        .date-selector select {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: white;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 1400px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            color: #64748b;
+        }
+
+        .stat-change {
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        .stat-change.up {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .stat-change.down {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .stat-breakdown {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        .alert-critical { color: #ef4444; }
+        .alert-warning { color: #f59e0b; }
+        .alert-info { color: #3b82f6; }
+
+        /* Charts */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 992px) {
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-container {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container.large {
+            grid-column: span 1;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+        }
+
+        .chart-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .chart-action-btn {
+            padding: 4px 12px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .chart-action-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Activity List */
+        .activity-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .card-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .view-all {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .activity-list {
+            padding: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .activity-icon.success { background: #dcfce7; color: #166534; }
+        .activity-icon.warning { background: #fef3c7; color: #92400e; }
+        .activity-icon.info { background: #dbeafe; color: #1e40af; }
+        .activity-icon.danger { background: #fee2e2; color: #991b1b; }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-content h4 {
+            margin-bottom: 4px;
+        }
+
+        .activity-content p {
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-bottom: 4px;
+        }
+
+        .activity-time {
+            color: #94a3b8;
+            font-size: 0.75rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions-section {
+            margin-bottom: 2rem;
+        }
+
+        .quick-actions-section h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+        }
+
+        @media (max-width: 1400px) {
+            .quick-actions-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .quick-actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .quick-action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 1.5rem;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-action-btn:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-action-btn i {
+            font-size: 1.5rem;
+            color: #3b82f6;
+        }
+
+        /* User Management */
+        .section-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .filters-section {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: white;
+        }
+
+        .table-section {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th {
+            background: #f8fafc;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .admin-table td {
+            padding: 16px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .admin-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .checkbox-label input {
+            display: none;
+        }
+
+        .checkbox-label span {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #cbd5e1;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .checkbox-label input:checked + span {
+            background: #3b82f6;
+            border-color: #3b82f6;
+        }
+
+        .checkbox-label input:checked + span::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+        }
+
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .user-info strong {
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .user-info small {
+            color: #94a3b8;
+            font-size: 0.75rem;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .badge-driver {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-free {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .badge-premium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-badge.active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-badge.inactive {
+            background: #f1f5f9;
+            color: #64748b;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 4px;
+        }
+
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .action-btn.view:hover {
+            background: #dbeafe;
+            color: #1e40af;
+            border-color: #dbeafe;
+        }
+
+        .action-btn.edit:hover {
+            background: #fef3c7;
+            color: #92400e;
+            border-color: #fef3c7;
+        }
+
+        .action-btn.message:hover {
+            background: #dcfce7;
+            color: #166534;
+            border-color: #dcfce7;
+        }
+
+        .action-btn.delete:hover {
+            background: #fee2e2;
+            color: #991b1b;
+            border-color: #fee2e2;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 2rem;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-btn:hover {
+            border-color: #3b82f6;
+            color: #3b82f6;
+        }
+
+        .page-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .page-ellipsis {
+            color: #94a3b8;
+        }
+    </style>
+
+    <script src="config/api-config.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/weather-api.js"></script>
+    <script src="js/admin.js"></script>
